@@ -11,11 +11,24 @@ app = typer.Typer(
 
 @app.command()
 def doctor():
-    """Run workstation health checks."""
     DoctorPlugin().health_check()
 
 
 @app.command("docker-status")
 def docker_status():
-    """Check Docker status."""
     DockerPlugin().status()
+
+
+@app.command("docker-start")
+def docker_start():
+    DockerPlugin().start()
+
+
+@app.command("docker-stop")
+def docker_stop():
+    DockerPlugin().stop()
+
+
+@app.command("docker-restart")
+def docker_restart():
+    DockerPlugin().restart()

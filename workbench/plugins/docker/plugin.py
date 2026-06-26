@@ -1,4 +1,5 @@
 import subprocess
+import time
 
 from rich import print
 
@@ -19,27 +20,40 @@ class DockerPlugin(Plugin):
         pass
 
     def start(self):
+        logger.info("Starting Docker Desktop")
+
         subprocess.run(["open", "-a", "Docker"])
 
+        print("[yellow]Starting Docker Desktop...[/yellow]")
+
     def stop(self):
+        logger.info("Stopping Docker Desktop")
+
         subprocess.run(["pkill", "Docker"])
+
+        print("[green]Docker Desktop stopped[/green]")
+
+    def restart(self):
+        self.stop()
+
+        time.sleep(3)
+
+        self.start()
 
     def status(self):
         logger.info("Checking Docker status")
 
         try:
-            output = subprocess.check_output(
+            subprocess.check_output(
                 ["docker", "info"],
                 stderr=subprocess.STDOUT,
                 text=True,
             )
 
             print("[green]✓ Docker daemon is running[/green]")
-            return output
 
-        except subprocess.CalledProcessError as e:
+        except subprocess.CalledProcessError:
             print("[red]✗ Docker daemon is not running[/red]")
-            print(e.output)
 
     def health_check(self):
         self.status()
