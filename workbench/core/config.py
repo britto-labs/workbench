@@ -1,15 +1,23 @@
 from pathlib import Path
+import os
 
-import tomllib
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
-CONFIG_FILE = Path("config/workbench.toml")
+class Config:
 
+    ROOT = Path.cwd()
 
-class ConfigManager:
-    def __init__(self):
-        with open(CONFIG_FILE, "rb") as file:
-            self._config = tomllib.load(file)
+    POSTGRES_CONTAINER = os.getenv("POSTGRES_CONTAINER")
 
-    def get(self, section: str):
-        return self._config.get(section, {})
+    REDIS_CONTAINER = os.getenv("REDIS_CONTAINER")
+
+    QDRANT_CONTAINER = os.getenv("QDRANT_CONTAINER")
+
+    MINIO_CONTAINER = os.getenv("MINIO_CONTAINER")
+
+    N8N_CONTAINER = os.getenv("N8N_CONTAINER")
+
+    ADMINER_CONTAINER = os.getenv("ADMINER_CONTAINER")
