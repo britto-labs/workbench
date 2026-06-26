@@ -24,7 +24,25 @@ class DockerPlugin(Plugin):
 
         subprocess.run(["open", "-a", "Docker"])
 
-        print("[yellow]Starting Docker Desktop...[/yellow]")
+        print("\n[yellow]Starting Docker Desktop...[/yellow]")
+        print("[yellow]Waiting for Docker daemon...[/yellow]\n")
+
+        for _ in range(30):
+            try:
+                subprocess.check_output(
+                    ["docker", "info"],
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                )
+
+                print("[green]✓ Docker daemon is running[/green]")
+                print("[green]Docker is ready.[/green]")
+                return
+
+            except subprocess.CalledProcessError:
+                time.sleep(2)
+
+        print("[red]Timed out waiting for Docker.[/red]")
 
     def stop(self):
         logger.info("Stopping Docker Desktop")
@@ -35,22 +53,21 @@ class DockerPlugin(Plugin):
 
     def restart(self):
         self.stop()
-
         time.sleep(3)
-
         self.start()
 
     def status(self):
         logger.info("Checking Docker status")
 
         try:
-            subprocess.check_output(
-                ["docker", "info"],
+            output = subprocess.check_output(
+                ["docker", "version", "--format", "{{.Server.Version}}"],
                 stderr=subprocess.STDOUT,
                 text=True,
-            )
+            ).strip()
 
-            print("[green]✓ Docker daemon is running[/green]")
+            print(f"[green]✓ Docker daemon is running[/green]")
+            print(f"Docker Server Version: {output}")
 
         except subprocess.CalledProcessError:
             print("[red]✗ Docker daemon is not running[/red]")
