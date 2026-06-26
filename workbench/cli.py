@@ -3,6 +3,7 @@ import typer
 from workbench.plugins.doctor.plugin import DoctorPlugin
 from workbench.plugins.docker.plugin import DockerPlugin
 from workbench.plugins.ollama.plugin import OllamaPlugin
+from workbench.plugins.platform.plugin import PlatformPlugin
 from workbench.plugins.postgres.plugin import PostgresPlugin
 
 app = typer.Typer(
@@ -14,6 +15,21 @@ app = typer.Typer(
 @app.command()
 def doctor():
     DoctorPlugin().health_check()
+
+
+@app.command("platform-status")
+def platform_status():
+    PlatformPlugin().status()
+
+
+@app.command("platform-start")
+def platform_start():
+    PlatformPlugin().start()
+
+
+@app.command("platform-stop")
+def platform_stop():
+    PlatformPlugin().stop()
 
 
 @app.command("docker-status")
