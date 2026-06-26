@@ -2,6 +2,7 @@ import typer
 
 from workbench.plugins.doctor.plugin import DoctorPlugin
 from workbench.plugins.docker.plugin import DockerPlugin
+from workbench.plugins.ollama.plugin import OllamaPlugin
 
 app = typer.Typer(
     name="workbench",
@@ -11,6 +12,7 @@ app = typer.Typer(
 
 @app.command()
 def doctor():
+    """Run workstation health checks."""
     DoctorPlugin().health_check()
 
 
@@ -32,3 +34,18 @@ def docker_stop():
 @app.command("docker-restart")
 def docker_restart():
     DockerPlugin().restart()
+
+
+@app.command("ollama-status")
+def ollama_status():
+    OllamaPlugin().status()
+
+
+@app.command("ollama-start")
+def ollama_start():
+    OllamaPlugin().start()
+
+
+@app.command("ollama-stop")
+def ollama_stop():
+    OllamaPlugin().stop()
