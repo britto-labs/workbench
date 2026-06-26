@@ -2,11 +2,11 @@ import subprocess
 
 from rich import print
 
+from workbench.core.logger import logger
 from workbench.core.plugin import Plugin
 
 
 class DoctorPlugin(Plugin):
-
     @property
     def name(self) -> str:
         return "doctor"
@@ -33,6 +33,7 @@ class DoctorPlugin(Plugin):
         pass
 
     def health_check(self):
+        logger.info("Running workstation health checks")
 
         print("\n[bold cyan]Workbench Doctor[/bold cyan]\n")
 
@@ -56,3 +57,5 @@ class DoctorPlugin(Plugin):
 
             except Exception:
                 print(f"[red]✗[/red] {name}: Not Found")
+
+        logger.info("Workstation health checks completed")
