@@ -1,32 +1,67 @@
-cat > .gitignore << 'EOF'
+# -----------------------------
 # Python
-.venv/
+# -----------------------------
 __pycache__/
 *.py[cod]
-*.egg-info/
-
-# macOS
-.DS_Store
-
-# IDE
-.vscode/
-.idea/
-
-# Environment
+*.pyo
+*.pyd
+.venv/
+venv/
 .env
 
-# Logs
-*.log
+# -----------------------------
+# macOS
+# -----------------------------
+.DS_Store
 
-# Build
-dist/
-build/
+# -----------------------------
+# VS Code
+# -----------------------------
+.vscode/
 
+# -----------------------------
 # Python cache
+# -----------------------------
 .pytest_cache/
 .mypy_cache/
-
-# Coverage
 .coverage
 htmlcov/
-EOF
+
+# -----------------------------
+# Logs
+# -----------------------------
+*.log
+logs/
+
+# -----------------------------
+# Runtime Data
+# -----------------------------
+data/postgres/**
+data/redis/**
+data/qdrant/**
+data/minio/**
+data/n8n/**
+data/grafana/**
+data/loki/**
+data/prometheus/**
+
+# Keep folders
+!data/postgres/.gitkeep
+!data/redis/.gitkeep
+!data/qdrant/.gitkeep
+!data/minio/.gitkeep
+!data/n8n/.gitkeep
+!data/grafana/.gitkeep
+!data/loki/.gitkeep
+!data/prometheus/.gitkeep
+
+# -----------------------------
+# Docker
+# -----------------------------
+*.pid
+
+# -----------------------------
+# Temporary
+# -----------------------------
+tmp/
+temp/
